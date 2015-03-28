@@ -1,0 +1,15 @@
+<h1>Edit {{ recipe.title }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'cookbook:edit' recipe.id %}" method="post">
+{% csrf_token %}
+  <label for="title">Title</label>
+  <input id="title" type="text" name="title" value="{{ recipe.title }}">
+  <ul>
+  {% for ingredient in recipe.ingredients.all %}
+    <li>{{ ingredient.title }} | {{ ingredient.calorie_count }} </li>
+  {% endfor %}
+  </ul>
+  <input type="submit" value="Submit" />
+</form>

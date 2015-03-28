@@ -4,3 +4,4 @@
   <li>{{ ingredient.title }} | {{ ingredient.calorie_count }} calories</li>
 {% endfor %}
 </ul>
+<a href="{% url 'cookbook:edit' recipe.id %}">Edit</a>
