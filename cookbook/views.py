@@ -1,23 +1,31 @@
-from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.views import generic
 
 from cookbook.models import Recipe, Ingredient
 
 
-def index(request):
-    recipe_list = Recipe.objects.all()
-    context = {'recipe_list': recipe_list}
-    return render(request, 'cookbook/index.html', context)
+class IndexView(generic.ListView):
+    template_name = 'cookbook/index.html'
+    context_object_name = 'recipe_list'
+
+    def get_queryset(self):
+        return Recipe.objects.all
+    # recipe_list = Recipe.objects.all()
+    # context = {'recipe_list': recipe_list}
+    # return render(request, 'cookbook/index.html', context)
 
 
-def detail(request, recipe_id):
-    recipe = get_object_or_404(Recipe, pk=recipe_id)
-    total = 0
-    for ingredient in recipe.ingredients.all():
-        total += ingredient.calorie_count
-    return render(request, 'cookbook/detail.html', {'recipe': recipe,
-                  'total_calories': total})
+class DetailView(generic.DetailView):
+    model = Recipe
+    template_name = 'cookbook/detail.html'
+    # recipe = get_object_or_404(Recipe, pk=recipe_id)
+    # total = 0
+    # for ingredient in recipe.ingredients.all():
+    #     total += ingredient.calorie_count
+    # return render(request, 'cookbook/detail.html', {'recipe': recipe,
+    #               'total_calories': total})
 
 def edit(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
