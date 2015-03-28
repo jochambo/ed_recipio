@@ -9,6 +9,11 @@ def index(request):
     context = {'recipe_list': recipe_list}
     return render(request, 'cookbook/index.html', context)
 
+
 def detail(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
-    return render(request, 'cookbook/detail.html', {'recipe': recipe})
+    total = 0
+    for ingredient in recipe.ingredients.all():
+        total += ingredient.calorie_count
+    return render(request, 'cookbook/detail.html', {'recipe': recipe,
+                  'total_calories': total})
