@@ -1,1 +1,9 @@
-"Hello, world from the index"
+{% if recipe_list %}
+  <ul>
+  {% for recipe in recipe_list %}
+    <li><a href="{% url 'cookbook:detail' recipe.id %}">{{ recipe.title }}</a></li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <p>No recipes are available.</p>
+{% endif %}
