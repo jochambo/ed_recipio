@@ -1,12 +1,20 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.views import generic
+from django.views.generic import ListView, DetailView
 
 from cookbook.models import Recipe, Ingredient
 
 
-class IndexView(generic.ListView):
+class RecipeMixin(object):
+    def get_total_calories(self):
+        recipe = get_object_or_404(Recipe, pk=1)
+        total = 0
+        for ingredient in recipe.ingredients.all():
+            total += ingredient.calorie_count
+        return total
+
+class RecipeList(RecipeMixin, ListView):
     template_name = 'cookbook/index.html'
     context_object_name = 'recipe_list'
 
@@ -17,13 +25,13 @@ class IndexView(generic.ListView):
     # return render(request, 'cookbook/index.html', context)
 
 
-class DetailView(generic.DetailView):
+class RecipeDetail(RecipeMixin, DetailView):
     model = Recipe
     template_name = 'cookbook/detail.html'
-    # recipe = get_object_or_404(Recipe, pk=recipe_id)
-    # total = 0
-    # for ingredient in recipe.ingredients.all():
-    #     total += ingredient.calorie_count
+    # def get_queryset(self):
+    #     self.recipe = get_object_or_404(Recipe, pk=1)
+    #     return Ingredient.objects.filter(recipe=self.recipe.id)
+
     # return render(request, 'cookbook/detail.html', {'recipe': recipe,
     #               'total_calories': total})
 
