@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 
 class Ingredient(models.Model):
@@ -22,3 +23,13 @@ class Recipe(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('recipe_edit', kwargs={'pk': self.pk})
+
+    def get_total_calories(self):
+        total = 0
+        for ingredient in self.ingredients.all():
+            total += ingredient.calorie_count
+            print "**** Total: %d" % total
+        return total

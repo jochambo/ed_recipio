@@ -1,7 +1,8 @@
-<h1>{{ recipe.title }} | {{ view.get_total_calories }} calories</h1>
+<h1>{{ recipe.title }} | {{ view.total }} calories</h1>
 <ul>
 {% for ingredient in recipe.ingredients.all|dictsortreversed:"calorie_count" %}
   <li>{{ ingredient.title }} | {{ ingredient.calorie_count }} calories</li>
 {% endfor %}
 </ul>
+<a href="{% url 'cookbook:recipe_delete' recipe.id %}">Delete</a>
 

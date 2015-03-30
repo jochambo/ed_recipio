@@ -1,0 +1,15 @@
+<h1>Recipe List</h1>
+{% if recipe_list %}
+  <ul>
+  {% for recipe in recipe_list %}
+    <li>
+    <a href="{% url 'cookbook:detail' recipe.id %}"><h3>{{ recipe.title }}: {{ view.total }} calories</h3></a>
+    <a href="{% url 'cookbook:recipe_edit' recipe.id %}">Edit</a> | <a href="{% url 'cookbook:recipe_delete' recipe.id %}">Delete</a>
+    </li>
+
+  {% endfor %}
+  </ul>
+  <a href="{% url 'cookbook:recipe_new' %}">New</a>
+{% else %}
+  <p>No recipes are available.</p>
+{% endif %}
