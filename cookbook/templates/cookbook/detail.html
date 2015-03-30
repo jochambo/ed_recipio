@@ -1,8 +1,19 @@
+{% extends 'cookbook/base.html' %}
+
+{% block content %}
 <h1>{{ recipe.title }} | {{ view.total }} calories</h1>
-<ul>
+<table class="table table-hover">
 {% for ingredient in recipe.ingredients.all|dictsortreversed:"calorie_count" %}
-  <li>{{ ingredient.title }} | {{ ingredient.calorie_count }} calories</li>
+  <tr>
+    <td>{{ ingredient.title }}</td>
+    <td>{{ ingredient.calorie_count }} calories</td>
+  </tr>
 {% endfor %}
+  <tr>
+    <td><a class="btn btn-primary" href="{% url 'cookbook:recipe_edit' recipe.id %}">Edit</a></td>
+    <td><a class="btn btn-danger" href="{% url 'cookbook:recipe_delete' recipe.id %}">Delete</a></td>
+  </tr>
+</table>
 </ul>
-<a href="{% url 'cookbook:recipe_delete' recipe.id %}">Delete</a>
+{% endblock content %}
 

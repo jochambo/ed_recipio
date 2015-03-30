@@ -23,6 +23,7 @@ class RecipeDelete(DeleteView):
 
 class RecipeDetail(DetailView):
     model = Recipe
+    # TODO -- How do I access the pk for the current recipe? Remove hard-coded value
     recipe = get_object_or_404(Recipe, pk=1)
     template_name = 'cookbook/detail.html'
     total = model.get_total_calories(recipe)
