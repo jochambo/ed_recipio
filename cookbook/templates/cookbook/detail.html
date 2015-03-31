@@ -1,7 +1,7 @@
 {% extends 'cookbook/base.html' %}
 
 {% block content %}
-<h1>{{ recipe.title }} | {{ view.total }} calories</h1>
+<h1>{{ recipe.title }} | {{ recipe.get_total_calories }} calories</h1>
 <table class="table table-hover">
 {% for ingredient in recipe.ingredients.all|dictsortreversed:"calorie_count" %}
   <tr>

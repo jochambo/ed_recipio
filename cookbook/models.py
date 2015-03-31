@@ -21,7 +21,6 @@ class Recipe(models.Model):
     title = models.CharField(max_length=200)
     ingredients = models.ManyToManyField(Ingredient)
 
-
     def __unicode__(self):
         return self.title
 
@@ -32,7 +31,6 @@ class Recipe(models.Model):
         total = 0
         for ingredient in self.ingredients.all():
             total += ingredient.calorie_count
-            print "**** Total: %d" % total
         return total
 
 # TODO -- Implement ordering based on total calories

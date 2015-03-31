@@ -5,11 +5,11 @@
   <h1>Recipe List</h1>
   {% if recipe_list %}
     <table class="table table-hover">
-    <!-- TODO -- Somehow implement this: `|dictsortreversed:"{{view.total}}"` on the recipe_list -->
+    <!-- TODO -- Somehow implement this: `|dictsortreversed:"{{recipe.get_total_calories}}"` on the recipe_list -->
     {% for recipe in recipe_list %}
       <tr>
         <td><a href="{% url 'cookbook:detail' recipe.id %}">{{ recipe.title }}</a></td>
-        <td>{{ view.total }}</td>
+        <td>{{ recipe.get_total_calories }}</td>
         <td><a class="btn btn-primary" href="{% url 'cookbook:recipe_edit' recipe.id %}">Edit</a></td>
         <td><a class="btn btn-danger"href="{% url 'cookbook:recipe_delete' recipe.id %}">Delete</a></td>
       </tr>
